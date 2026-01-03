@@ -27,7 +27,7 @@ RSpec.describe EasyBroker::Configuration do
 
         config = described_class.new
 
-        expect(config.base_url).to eq('https://api.stagingeb.com')
+        expect(config.base_url).to eq('https://api.stagingeb.com/v1')
       end
     end
 

@@ -29,7 +29,7 @@ module EasyBroker
         validate_limit!(limit)
 
         params = pagination_params(page, limit).merge(sanitize_filters(filters))
-        response = client.get('/properties', params)
+        response = client.get('properties', params)
 
         parse_paginated_response(response, Models::Property)
       end
@@ -38,7 +38,7 @@ module EasyBroker
       # @param id [String, Integer] Property ID or public ID
       # @return [Models::Property]
       def find(id)
-        response = client.get("/properties/#{id}")
+        response = client.get("properties/#{id}")
         Models::Property.new(response)
       end
 

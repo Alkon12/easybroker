@@ -83,7 +83,7 @@ module EasyBroker
     def build_connection
       Faraday.new(url: config.base_url) do |f|
         f.headers['X-Authorization'] = config.api_key
-        f.headers['Content-Type'] = 'application/json'
+        f.headers['Accept'] = 'application/json'
 
         f.request :json
         f.response :json, parser_options: { symbolize_names: false }

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe EasyBroker::Resources::Locations do
   let(:api_key) { 'test_api_key' }
-  let(:base_url) { 'https://api.test.com' }
+  let(:base_url) { 'https://api.test.com/v1' }
   let(:client) { EasyBroker::Client.new(api_key: api_key, base_url: base_url) }
   let(:locations) { described_class.new(client) }
 

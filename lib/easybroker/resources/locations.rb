@@ -19,7 +19,7 @@ module EasyBroker
         params = pagination_params(page, limit)
         params[:search] = search if search
 
-        response = client.get('/locations', params)
+        response = client.get('locations', params)
 
         parse_paginated_response(response, Models::Location)
       end
@@ -37,7 +37,7 @@ module EasyBroker
       # @param id [String, Integer] Location ID
       # @return [Models::Location]
       def find(id)
-        response = client.get("/locations/#{id}")
+        response = client.get("locations/#{id}")
         Models::Location.new(response)
       end
     end

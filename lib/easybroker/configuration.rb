@@ -4,7 +4,7 @@ module EasyBroker
 
     def initialize(api_key: nil, base_url: nil)
       @api_key = api_key || ENV.fetch('EASYBROKER_API_KEY', nil)
-      @base_url = base_url || ENV.fetch('EASYBROKER_BASE_URL', 'https://api.stagingeb.com')
+      @base_url = base_url || ENV.fetch('EASYBROKER_BASE_URL', 'https://api.stagingeb.com/v1')
     end
 
     def valid?
