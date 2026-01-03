@@ -40,6 +40,10 @@ gem "thruster", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem "image_processing", "~> 1.2"
 
+# HTTP client for EasyBroker API
+gem "faraday", "~> 2.7"
+gem "faraday-retry", "~> 2.2"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
@@ -52,6 +56,14 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # Testing framework
+  gem "rspec-rails", "~> 7.0"
+  gem "factory_bot_rails", "~> 6.4"
+  gem "faker", "~> 3.2"
+
+  # Environment variables management
+  gem "dotenv-rails", "~> 2.8"
 end
 
 group :development do
@@ -63,4 +75,12 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+
+  # HTTP mocking and recording
+  gem "webmock", "~> 3.19"
+  gem "vcr", "~> 6.2"
+
+  # Testing matchers and code coverage
+  gem "shoulda-matchers", "~> 6.0"
+  gem "simplecov", "~> 0.22", require: false
 end
