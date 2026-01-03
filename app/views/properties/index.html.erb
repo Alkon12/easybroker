@@ -1,0 +1,30 @@
+<div class="space-y-6">
+  <div class="flex items-center justify-between">
+    <div>
+      <h1 class="text-3xl font-bold text-gray-900">Properties</h1>
+      <p class="mt-1 text-gray-500">Browse available properties from EasyBroker</p>
+    </div>
+  </div>
+
+  <% if @properties.any? %>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in">
+      <% @properties.each do |property| %>
+        <%= render "property_card", property: property %>
+      <% end %>
+    </div>
+
+    <% if @pagination && @pagination.total_pages > 1 %>
+      <%= render "pagination", pagination: @pagination, total: @total %>
+    <% end %>
+  <% else %>
+    <div class="text-center py-16">
+      <div class="w-16 h-16 bg-ios-gray-1 rounded-full mx-auto mb-4 flex items-center justify-center">
+        <svg class="w-8 h-8 text-ios-gray-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+        </svg>
+      </div>
+      <h3 class="text-lg font-medium text-gray-900 mb-1">No properties found</h3>
+      <p class="text-gray-500">Try adjusting your search criteria</p>
+    </div>
+  <% end %>
+</div>

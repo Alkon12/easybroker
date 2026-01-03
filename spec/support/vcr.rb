@@ -5,6 +5,9 @@ VCR.configure do |config|
   config.hook_into :webmock
   config.configure_rspec_metadata!
 
+  # Allow HTTP connections when no cassette is in use (for unit tests with WebMock stubs)
+  config.allow_http_connections_when_no_cassette = true
+
   # Filter sensitive data
   config.filter_sensitive_data('<EASYBROKER_API_KEY>') { ENV['EASYBROKER_API_KEY'] }
   config.filter_sensitive_data('<EASYBROKER_API_KEY>') { 'l7u502p8v46ba3ppgvj5y2aad50lb9' }

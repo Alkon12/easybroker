@@ -1,0 +1,15 @@
+<div class="flex items-center justify-between pt-6 border-t border-gray-200">
+  <div class="text-sm text-gray-600">
+    Showing page <%= pagination.page %> of <%= pagination.total_pages %> (<%= total %> total properties)
+  </div>
+
+  <div class="flex items-center space-x-2">
+    <% unless pagination.first_page? %>
+      <%= link_to "← Previous", properties_path(page: pagination.page - 1), class: "btn btn-secondary" %>
+    <% end %>
+
+    <% if pagination.next_page? %>
+      <%= link_to "Next →", properties_path(page: pagination.next_page), class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

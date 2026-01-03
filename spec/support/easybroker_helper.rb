@@ -20,6 +20,8 @@ module EasyBrokerHelper
       'bathrooms' => 2,
       'location' => 'Test City, Test State',
       'price' => 1_500_000,
+      'show_prices' => true,
+      'currency' => 'USD',
       'property_images' => [
         { 'url' => 'https://example.com/image1.jpg', 'title' => 'Image 1' }
       ],

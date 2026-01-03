@@ -20,10 +20,27 @@
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body class="bg-gray-50 min-h-screen">
+    <%= render "layouts/navbar" %>
+
+    <main class="container mx-auto px-4 py-8 max-w-7xl">
+      <% if flash[:notice] %>
+        <div class="mb-6 p-4 bg-ios-blue/10 border border-ios-blue/20 rounded-ios text-ios-blue animate-fade-in">
+          <%= flash[:notice] %>
+        </div>
+      <% end %>
+
+      <% if flash[:alert] %>
+        <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-ios text-red-600 animate-fade-in">
+          <%= flash[:alert] %>
+        </div>
+      <% end %>
+
+      <%= yield %>
+    </main>
   </body>
 </html>
