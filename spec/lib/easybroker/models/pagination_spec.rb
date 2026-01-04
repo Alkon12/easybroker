@@ -38,6 +38,39 @@ RSpec.describe EasyBroker::Models::Pagination do
     end
   end
 
+  describe '#next_page_number' do
+    it 'returns nil when next_page is nil' do
+      pagination = described_class.new({ 'next_page' => nil })
+      expect(pagination.next_page_number).to be_nil
+    end
+
+    it 'returns the number when next_page is already an integer' do
+      pagination = described_class.new({ 'next_page' => 3 })
+      expect(pagination.next_page_number).to eq(3)
+    end
+
+    it 'extracts page number from URL with query string' do
+      pagination = described_class.new({
+        'next_page' => 'https://api.stagingeb.com/v1/properties?limit=20&page=2'
+      })
+      expect(pagination.next_page_number).to eq(2)
+    end
+
+    it 'extracts page number from URL with page as first parameter' do
+      pagination = described_class.new({
+        'next_page' => 'https://api.stagingeb.com/v1/properties?page=5&limit=20'
+      })
+      expect(pagination.next_page_number).to eq(5)
+    end
+
+    it 'returns nil when URL has no page parameter' do
+      pagination = described_class.new({
+        'next_page' => 'https://api.stagingeb.com/v1/properties?limit=20'
+      })
+      expect(pagination.next_page_number).to be_nil
+    end
+  end
+
   describe '#total_pages' do
     it 'calculates total pages correctly' do
       pagination = described_class.new({ 'total' => 100, 'limit' => 20 })

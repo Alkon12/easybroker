@@ -9,7 +9,7 @@
     <% end %>
 
     <% if pagination.next_page? %>
-      <%= link_to "Next →", properties_path(request.query_parameters.merge(page: pagination.next_page)), class: "btn btn-primary" %>
+      <%= link_to "Next →", properties_path(request.query_parameters.merge(page: pagination.next_page_number)), class: "btn btn-primary" %>
     <% end %>
   </div>
 </div>
