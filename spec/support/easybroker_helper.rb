@@ -15,13 +15,19 @@ module EasyBrokerHelper
       'title' => 'Beautiful House in Test City',
       'description' => 'A lovely property for testing purposes',
       'property_type' => 'House',
-      'operations' => ['sale'],
+      'operations' => [
+        {
+          'type' => 'sale',
+          'amount' => 1_500_000,
+          'formated_amount' => '$1,500,000',
+          'currency' => 'USD',
+          'unit' => 'total'
+        }
+      ],
       'bedrooms' => 3,
       'bathrooms' => 2,
       'location' => 'Test City, Test State',
-      'price' => 1_500_000,
       'show_prices' => true,
-      'currency' => 'USD',
       'property_images' => [
         { 'url' => 'https://example.com/image1.jpg', 'title' => 'Image 1' }
       ],

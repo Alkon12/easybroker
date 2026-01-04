@@ -13,7 +13,8 @@ RSpec.describe EasyBroker::Models::Property do
     end
 
     it 'parses operations array' do
-      expect(property.operations).to eq(['sale'])
+      expect(property.operations).to be_an(Array)
+      expect(property.operations.first['type']).to eq('sale')
     end
 
     it 'sets numeric attributes' do
@@ -40,7 +41,7 @@ RSpec.describe EasyBroker::Models::Property do
     end
 
     it 'returns "Price on request" when price is nil' do
-      property_no_price = described_class.new(property_data.merge('price' => nil))
+      property_no_price = described_class.new(property_data.merge('operations' => []))
       expect(property_no_price.formatted_price).to eq('Price on request')
     end
   end
@@ -51,7 +52,9 @@ RSpec.describe EasyBroker::Models::Property do
     end
 
     it 'returns false when operations do not include sale' do
-      rental_property = described_class.new(property_data.merge('operations' => ['rental']))
+      rental_property = described_class.new(property_data.merge('operations' => [
+        { 'type' => 'rental', 'amount' => 5000, 'currency' => 'USD' }
+      ]))
       expect(rental_property.for_sale?).to be false
     end
   end
@@ -62,7 +65,9 @@ RSpec.describe EasyBroker::Models::Property do
     end
 
     it 'returns true when operations include rental' do
-      rental_property = described_class.new(property_data.merge('operations' => ['rental']))
+      rental_property = described_class.new(property_data.merge('operations' => [
+        { 'type' => 'rental', 'amount' => 5000, 'currency' => 'USD' }
+      ]))
       expect(rental_property.for_rent?).to be true
     end
   end
@@ -73,7 +78,10 @@ RSpec.describe EasyBroker::Models::Property do
     end
 
     it 'combines multiple operations' do
-      both_property = described_class.new(property_data.merge('operations' => ['sale', 'rental']))
+      both_property = described_class.new(property_data.merge('operations' => [
+        { 'type' => 'sale', 'amount' => 1_500_000, 'currency' => 'USD' },
+        { 'type' => 'rental', 'amount' => 5000, 'currency' => 'USD' }
+      ]))
       expect(both_property.operation_types).to eq('For Sale / For Rent')
     end
   end

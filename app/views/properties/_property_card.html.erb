@@ -1,7 +1,7 @@
 <%= link_to property_path(property.public_id || property.id), class: "block card group" do %>
   <div class="relative h-48 bg-ios-gray-1 rounded-t-ios-lg overflow-hidden">
-    <% if property.main_image %>
-      <img src="<%= property.main_image %>" alt="<%= property.title %>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+    <% if property.thumbnail_image %>
+      <img src="<%= property.thumbnail_image %>" alt="<%= property.title %>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
     <% else %>
       <div class="w-full h-full flex items-center justify-center">
         <svg class="w-12 h-12 text-ios-gray-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

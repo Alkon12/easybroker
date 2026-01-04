@@ -8,7 +8,7 @@ module EasyBroker
                   :location, :address, :neighborhood, :city, :state,
                   :price, :currency, :property_images, :videos,
                   :updated_at, :created_at, :show_prices, :share_commission,
-                  :internal_id, :agent
+                  :internal_id, :agent, :title_image_full, :title_image_thumb
 
       def initialize(attributes = {})
         @id = attributes['id']
@@ -32,13 +32,22 @@ module EasyBroker
         @city = attributes['city']
         @state = attributes['state']
 
-        @price = attributes['price']
-        @currency = attributes['currency']
+        # Extract price and currency from operations array
+        # Prefer sale operation, fallback to first operation
+        @primary_operation = extract_primary_operation
+        @price = @primary_operation&.dig('amount')
+        @currency = @primary_operation&.dig('currency')
+        @formatted_amount = @primary_operation&.dig('formated_amount')
+
         @show_prices = attributes['show_prices']
         @share_commission = attributes['share_commission']
 
         @property_images = attributes['property_images'] || []
         @videos = attributes['videos'] || []
+
+        # Images from list endpoint
+        @title_image_full = attributes['title_image_full']
+        @title_image_thumb = attributes['title_image_thumb']
 
         @updated_at = parse_time(attributes['updated_at'])
         @created_at = parse_time(attributes['created_at'])
@@ -48,9 +57,16 @@ module EasyBroker
       end
 
       # Get the main/first property image URL
+      # Returns title_image_full from list endpoint, or first property_image from detail endpoint
       # @return [String, nil]
       def main_image
-        property_images.first&.dig('url')
+        title_image_full || property_images.first&.dig('url')
+      end
+
+      # Get the thumbnail image URL (used in list views)
+      # @return [String, nil]
+      def thumbnail_image
+        title_image_thumb || title_image_full || property_images.first&.dig('url')
       end
 
       # Get all image URLs
@@ -64,6 +80,10 @@ module EasyBroker
       def formatted_price
         return 'Price on request' if price.nil? || !show_prices
 
+        # Use API's formatted amount if available
+        return @formatted_amount if @formatted_amount
+
+        # Fallback to manual formatting
         symbol = currency_symbol
         amount = format_number(price)
 
@@ -73,13 +93,13 @@ module EasyBroker
       # Check if property is for sale
       # @return [Boolean]
       def for_sale?
-        operations.include?('sale')
+        operations.any? { |op| op['type'] == 'sale' }
       end
 
       # Check if property is for rent
       # @return [Boolean]
       def for_rent?
-        operations.include?('rental')
+        operations.any? { |op| op['type'] == 'rental' || op['type'] == 'temporary_rental' }
       end
 
       # Get operation types as human-readable string
@@ -139,6 +159,13 @@ module EasyBroker
       end
 
       private
+
+      def extract_primary_operation
+        return nil if operations.empty?
+
+        # Prefer sale operation, otherwise use first operation
+        operations.find { |op| op['type'] == 'sale' } || operations.first
+      end
 
       def parse_time(time_string)
         return nil if time_string.nil?
