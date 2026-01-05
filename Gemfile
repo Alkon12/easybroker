@@ -63,7 +63,7 @@ group :development, :test do
   gem "faker", "~> 3.2"
 
   # Environment variables management
-  gem "dotenv-rails", "~> 2.8"
+  gem "dotenv-rails", "~> 3.2"
 end
 
 group :development do
