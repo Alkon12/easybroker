@@ -55,8 +55,9 @@ RUN pnpm install --frozen-lockfile
 # Copy application code
 COPY . .
 
-# Build Tailwind CSS
-RUN pnpm run build:css
+# Create assets builds directory and build Tailwind CSS
+RUN mkdir -p app/assets/builds && \
+    pnpm run build:css
 
 # Precompile bootsnap code for faster boot times.
 # -j 1 disable parallel compilation to avoid a QEMU bug: https://github.com/rails/bootsnap/issues/495
