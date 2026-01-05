@@ -30,6 +30,10 @@ class LocationsController < ApplicationController
   def map_properties
     result = Properties::MapDataService.new.call
 
+    # Set cache headers to prevent excessive API calls from browser
+    # Cache for 10 minutes to match service cache TTL
+    expires_in 10.minutes, public: true
+
     respond_to do |format|
       format.json do
         if result[:success]

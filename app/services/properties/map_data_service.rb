@@ -4,13 +4,31 @@ module Properties
   # to get coordinates, which are not available in the list endpoint
   class MapDataService
     # Maximum properties to show on map to balance UX and performance
-    MAX_MAP_PROPERTIES = 50
+    MAX_MAP_PROPERTIES = 30
+    # Cache TTL: 10 minutes to reduce API calls while keeping data reasonably fresh
+    CACHE_TTL = 10.minutes
 
     def initialize(limit: MAX_MAP_PROPERTIES)
       @limit = [limit, MAX_MAP_PROPERTIES].min
     end
 
     def call
+      # Use Rails cache to avoid excessive API calls
+      # Cache key includes limit to ensure different limits are cached separately
+      Rails.cache.fetch(cache_key, expires_in: CACHE_TTL) do
+        fetch_map_data
+      end
+    rescue EasyBroker::Error => e
+      error_result(e.message)
+    end
+
+    private
+
+    def cache_key
+      "properties/map_data/limit_#{@limit}"
+    end
+
+    def fetch_map_data
       client = easybroker_client
 
       # Step 1: Get list of properties (only IDs and basic data)
@@ -30,11 +48,7 @@ module Properties
         valid_count: valid_properties.count,
         success: true
       }
-    rescue EasyBroker::Error => e
-      error_result(e.message)
     end
-
-    private
 
     def easybroker_client
       @client ||= EasyBroker::Client.new
