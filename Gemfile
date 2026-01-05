@@ -81,6 +81,6 @@ group :test do
   gem "vcr", "~> 6.2"
 
   # Testing matchers and code coverage
-  gem "shoulda-matchers", "~> 6.0"
+  gem "shoulda-matchers", "~> 7.0"
   gem "simplecov", "~> 0.22", require: false
 end
