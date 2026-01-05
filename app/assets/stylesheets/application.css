@@ -10,7 +10,8 @@
  */
 
 /* Leaflet map styles */
-[data-controller="map"] {
+[data-controller="map"],
+[data-controller="properties-map"] {
   height: 24rem; /* 384px - same as h-96 */
   width: 100%;
   z-index: 1;
@@ -20,4 +21,124 @@
   height: 100%;
   width: 100%;
   z-index: 1;
+}
+
+/* Property popup styles - iOS themed */
+.property-popup {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+}
+
+.property-popup .leaflet-popup-content-wrapper {
+  padding: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+.property-popup .leaflet-popup-content {
+  margin: 0;
+  width: 100% !important;
+}
+
+.property-popup-card {
+  min-width: 280px;
+  max-width: 320px;
+}
+
+.property-popup-image {
+  position: relative;
+  height: 160px;
+  background: #F2F2F7; /* ios-gray-1 */
+  overflow: hidden;
+}
+
+.property-popup-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.property-popup-card:hover .property-popup-image img {
+  transform: scale(1.05);
+}
+
+.property-popup-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  padding: 4px 12px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #007AFF; /* ios-blue */
+}
+
+.property-popup-content {
+  padding: 12px;
+}
+
+.property-popup-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #000000;
+  margin-bottom: 6px;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.property-popup-location {
+  font-size: 12px;
+  color: #8E8E93; /* ios-gray-5 */
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.property-popup-summary {
+  font-size: 13px;
+  color: #636366; /* ios-gray-6 */
+  margin-bottom: 10px;
+}
+
+.property-popup-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid #F2F2F7; /* ios-gray-1 */
+}
+
+.property-popup-price {
+  font-size: 18px;
+  font-weight: 700;
+  color: #000000;
+}
+
+.property-popup-link {
+  font-size: 13px;
+  color: #007AFF; /* ios-blue */
+  font-weight: 500;
+  transition: transform 0.2s ease;
+}
+
+.property-popup-card:hover .property-popup-link {
+  transform: translateX(2px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .property-popup-card {
+    min-width: 260px;
+  }
+
+  .property-popup-image {
+    height: 140px;
+  }
 }

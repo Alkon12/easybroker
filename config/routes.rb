@@ -16,5 +16,9 @@ Rails.application.routes.draw do
   resources :properties, only: [:index, :show]
 
   # Locations routes
-  resources :locations, only: [:index]
+  resources :locations, only: [:index] do
+    collection do
+      get :map_properties  # GET /locations/map_properties.json
+    end
+  end
 end

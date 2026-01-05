@@ -24,4 +24,26 @@ class LocationsController < ApplicationController
       @total = 0
     end
   end
+
+  # GET /locations/map_properties.json
+  # Returns property data for map visualization
+  def map_properties
+    result = Properties::MapDataService.new.call
+
+    respond_to do |format|
+      format.json do
+        if result[:success]
+          render json: {
+            properties: result[:properties],
+            meta: {
+              total_fetched: result[:total_fetched],
+              valid_count: result[:valid_count]
+            }
+          }
+        else
+          render json: { error: result[:error] }, status: :unprocessable_entity
+        end
+      end
+    end
+  end
 end

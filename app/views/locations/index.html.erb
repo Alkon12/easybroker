@@ -2,12 +2,64 @@
   <div class="flex items-center justify-between">
     <div>
       <h1 class="text-3xl font-bold text-gray-900">Locations</h1>
-      <p class="mt-1 text-gray-500">Browse EasyBroker locations</p>
+      <p class="mt-1 text-gray-500">Browse EasyBroker locations and properties on map</p>
     </div>
   </div>
 
+  <!-- Property Map Section -->
+  <div class="bg-white rounded-ios-xl shadow-ios-md overflow-hidden">
+    <div class="p-6 border-b border-gray-100">
+      <div class="flex items-center justify-between">
+        <h2 class="text-xl font-semibold text-gray-900">Property Map</h2>
+        <div data-properties-map-target="counter" class="text-sm text-gray-600">
+          Loading properties...
+        </div>
+      </div>
+    </div>
+
+    <div
+      data-controller="properties-map"
+      data-properties-map-api-url-value="<%= map_properties_locations_path(format: :json) %>"
+      class="relative"
+    >
+      <!-- Loading State -->
+      <div
+        data-properties-map-target="loading"
+        class="absolute inset-0 z-10 flex items-center justify-center bg-white bg-opacity-90"
+      >
+        <div class="text-center">
+          <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-ios-blue mb-4"></div>
+          <p class="text-gray-600 font-medium">Loading property locations...</p>
+          <p class="text-sm text-gray-500 mt-1">This may take a few seconds</p>
+        </div>
+      </div>
+
+      <!-- Error State -->
+      <div
+        data-properties-map-target="error"
+        class="hidden absolute inset-0 z-10 flex items-center justify-center bg-red-50"
+      >
+        <div class="text-center p-6">
+          <svg class="w-16 h-16 text-red-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <p class="text-red-600 font-medium"></p>
+        </div>
+      </div>
+
+      <!-- Map Container -->
+      <div
+        data-properties-map-target="container"
+        class="w-full h-96 md:h-[600px]"
+      ></div>
+    </div>
+  </div>
+
+  <!-- Locations Grid -->
   <% if @locations.any? %>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="mt-8">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">All Locations</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <% @locations.each do |location| %>
         <div class="card p-5">
           <div class="flex items-start justify-between">
@@ -49,16 +101,6 @@
         </div>
       </div>
     <% end %>
-  <% else %>
-    <div class="text-center py-16">
-      <div class="w-16 h-16 bg-ios-gray-1 rounded-full mx-auto mb-4 flex items-center justify-center">
-        <svg class="w-8 h-8 text-ios-gray-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-        </svg>
-      </div>
-      <h3 class="text-lg font-medium text-gray-900 mb-1">No locations found</h3>
-      <p class="text-gray-500">Try adjusting your search</p>
     </div>
   <% end %>
 </div>
