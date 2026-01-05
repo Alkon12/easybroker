@@ -20,27 +20,27 @@
   </div>
 
   <div class="p-4">
-    <h3 class="font-semibold text-gray-900 text-lg mb-1 line-clamp-2 group-hover:text-ios-blue transition-colors">
+    <h3 class="font-semibold text-gray-900 text-base sm:text-lg mb-1 line-clamp-2 group-hover:text-ios-blue transition-colors">
       <%= property.title %>
     </h3>
 
     <% if property.full_location.present? %>
-      <p class="text-sm text-gray-500 mb-3 flex items-center">
-        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <p class="text-xs sm:text-sm text-gray-500 mb-3 flex items-center">
+        <svg class="w-3 h-3 sm:w-4 sm:h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
         </svg>
-        <%= property.full_location %>
+        <span class="line-clamp-1"><%= property.full_location %></span>
       </p>
     <% end %>
 
     <% if property.summary.present? %>
-      <p class="text-sm text-gray-600 mb-3"><%= property.summary %></p>
+      <p class="text-xs sm:text-sm text-gray-600 mb-3 line-clamp-2"><%= property.summary %></p>
     <% end %>
 
     <div class="flex items-center justify-between pt-3 border-t border-gray-100">
-      <span class="text-2xl font-bold text-gray-900"><%= property.formatted_price %></span>
-      <span class="text-sm text-ios-blue group-hover:translate-x-1 transition-transform">
+      <span class="text-lg sm:text-xl md:text-2xl font-bold text-gray-900"><%= property.formatted_price %></span>
+      <span class="text-xs sm:text-sm text-ios-blue group-hover:translate-x-1 transition-transform whitespace-nowrap">
         View details →
       </span>
     </div>

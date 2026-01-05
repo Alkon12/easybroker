@@ -10,16 +10,16 @@
       </div>
     <% end %>
 
-    <div class="p-8">
-      <div class="flex items-start justify-between mb-6">
-        <div>
-          <h1 class="text-4xl font-bold text-gray-900 mb-2"><%= @property.title %></h1>
+    <div class="p-4 sm:p-6 md:p-8">
+      <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-6 gap-4">
+        <div class="flex-1">
+          <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2"><%= @property.title %></h1>
         </div>
 
-        <div class="text-right">
-          <div class="text-4xl font-bold text-ios-blue"><%= @property.formatted_price %></div>
+        <div class="sm:text-right">
+          <div class="text-2xl sm:text-3xl md:text-4xl font-bold text-ios-blue"><%= @property.formatted_price %></div>
           <% if @property.operation_types.present? %>
-            <div class="mt-2 px-4 py-2 bg-ios-gray-1 rounded-ios text-sm font-medium text-gray-700">
+            <div class="mt-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-ios-gray-1 rounded-ios text-xs sm:text-sm font-medium text-gray-700 inline-block">
               <%= @property.operation_types %>
             </div>
           <% end %>
@@ -27,25 +27,25 @@
       </div>
 
       <% if @property.bedrooms || @property.bathrooms || @property.parking_spaces %>
-        <div class="grid grid-cols-3 gap-4 mb-8 p-6 bg-ios-gray-1 rounded-ios-lg">
+        <div class="grid grid-cols-3 gap-2 sm:gap-4 mb-8 p-4 sm:p-6 bg-ios-gray-1 rounded-ios-lg">
           <% if @property.bedrooms %>
             <div class="text-center">
-              <div class="text-3xl font-bold text-gray-900"><%= @property.bedrooms %></div>
-              <div class="text-sm text-gray-600">Bedrooms</div>
+              <div class="text-2xl sm:text-3xl font-bold text-gray-900"><%= @property.bedrooms %></div>
+              <div class="text-xs sm:text-sm text-gray-600">Bedrooms</div>
             </div>
           <% end %>
 
           <% if @property.bathrooms %>
             <div class="text-center border-l border-gray-300">
-              <div class="text-3xl font-bold text-gray-900"><%= @property.bathrooms %></div>
-              <div class="text-sm text-gray-600">Bathrooms</div>
+              <div class="text-2xl sm:text-3xl font-bold text-gray-900"><%= @property.bathrooms %></div>
+              <div class="text-xs sm:text-sm text-gray-600">Bathrooms</div>
             </div>
           <% end %>
 
           <% if @property.parking_spaces %>
             <div class="text-center border-l border-gray-300">
-              <div class="text-3xl font-bold text-gray-900"><%= @property.parking_spaces %></div>
-              <div class="text-sm text-gray-600">Parking</div>
+              <div class="text-2xl sm:text-3xl font-bold text-gray-900"><%= @property.parking_spaces %></div>
+              <div class="text-xs sm:text-sm text-gray-600">Parking</div>
             </div>
           <% end %>
         </div>
@@ -53,12 +53,12 @@
 
       <% if @property.description.present? %>
         <div class="mb-8">
-          <h2 class="text-2xl font-bold text-gray-900 mb-4">Description</h2>
-          <p class="text-gray-700 leading-relaxed"><%= simple_format(@property.description) %></p>
+          <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-4">Description</h2>
+          <p class="text-sm sm:text-base text-gray-700 leading-relaxed"><%= simple_format(@property.description) %></p>
         </div>
       <% end %>
 
-      <div class="grid grid-cols-2 gap-4 p-6 bg-gray-50 rounded-ios-lg">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 sm:p-6 bg-gray-50 rounded-ios-lg">
         <% if @property.property_type %>
           <div>
             <div class="text-sm text-gray-500">Property Type</div>
@@ -90,14 +90,14 @@
 
       <% if @property.location && @property.location['latitude'] && @property.location['longitude'] %>
         <div class="mt-8">
-          <h2 class="text-2xl font-bold text-gray-900 mb-4">Location</h2>
+          <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-4">Location</h2>
           <div class="bg-white rounded-ios-lg overflow-hidden shadow-ios-sm">
             <div
               data-controller="map"
               data-map-latitude-value="<%= @property.location['latitude'] %>"
               data-map-longitude-value="<%= @property.location['longitude'] %>"
               data-map-name-value="<%= @property.location['name'] || @property.title %>"
-              class="w-full h-96"
+              class="w-full h-64 sm:h-80 md:h-96"
             ></div>
           </div>
         </div>
